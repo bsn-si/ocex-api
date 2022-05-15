@@ -1,0 +1,38 @@
+{
+  "name": "ocex-api",
+  "version": "0.1.0",
+  "description": "Ocex smartcontract api client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "run:example": "npm run build && ts-node ./examples/example.ts",
+    "style:fix": "prettier --config .prettierrc.js 'src/**/*.{ts,tsx}' --write",
+    "lint:fix": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+    "fix:all": "npm run style:fix && npm run lint:fix",
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "Anton Shramko <antonshramko@yandex.ru>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@polkadot/api": "^8.4.2",
+    "@polkadot/api-contract": "^8.4.2",
+    "@polkadot/keyring": "^9.2.1",
+    "@polkadot/types": "^8.4.2",
+    "@polkadot/types-support": "^8.4.2",
+    "@polkadot/util": "^9.2.1",
+    "@polkadot/util-crypto": "^9.2.1",
+    "bn.js": "^5.2.0",
+    "ocex-coupon-signature": "https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg?main",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.0",
+    "@types/node": "^17.0.33",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.2.0",
+    "ts-node": "^10.7.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  }
+}
