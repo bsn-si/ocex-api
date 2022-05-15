@@ -5,6 +5,7 @@ import { KeyringPair } from "@polkadot/keyring/types";
 import { ApiBase } from "@polkadot/api/base";
 import * as BN from "bn.js";
 import { Coupon } from "./coupon";
+export declare const CONTRACT_MULTIPLE_COUPONS_LIMIT = 5;
 export declare enum ErrorCode {
     InvalidParseCouponSignature = "InvalidParseCouponSignature",
     ContractBalanceNotEnough = "ContractBalanceNotEnough",

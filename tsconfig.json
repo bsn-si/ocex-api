@@ -18,6 +18,9 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "allowJs": true,
+
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "include": [
     "src/**/*"

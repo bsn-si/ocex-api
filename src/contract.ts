@@ -1,6 +1,5 @@
-import { AccountId, Address } from "@polkadot/types/interfaces"
 import { get_coupon_signature } from "ocex-coupon-signature"
-import { ISubmittableResult } from "@polkadot/types/types"
+import { AccountId } from "@polkadot/types/interfaces"
 import { Contract } from "@polkadot/api-contract/base"
 import { KeyringPair } from "@polkadot/keyring/types"
 import { toPromiseMethod } from "@polkadot/api"
@@ -16,6 +15,9 @@ async function getBalance(api: ApiBase<"promise">, address: AccountId | string):
   const { data: { free } } = await api.query.system.account(address) as any
   return free
 }
+
+// How many coupons can added with `addCoupons` method in contract - by default 5
+export const CONTRACT_MULTIPLE_COUPONS_LIMIT = 5
 
 export enum ErrorCode {
   InvalidParseCouponSignature = "InvalidParseCouponSignature",
@@ -97,7 +99,11 @@ export class Ocex {
   }
 
   // Set array `max N items` of `coupon` with declared per key.
-  public async addCoupons(coupons: Coupon[], amount: BN, limit = 5): Promise<CouponsResult> {
+  public async addCoupons(
+    coupons: Coupon[],
+    amount: BN,
+    limit = CONTRACT_MULTIPLE_COUPONS_LIMIT,
+  ): Promise<CouponsResult> {
     if (coupons.length > limit) {
       throw new Error(`Max ${limit} coupons can be added with this method`)
     }

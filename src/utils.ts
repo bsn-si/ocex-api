@@ -5,7 +5,7 @@ import { KeyringPair } from "@polkadot/keyring/types"
 import Keyring from "@polkadot/keyring"
 import * as BN from "bn.js"
 
-export const keyring = new Keyring({ type: "sr25519" })
+export const cryptoKeyring = new Keyring({ type: "sr25519" })
 
 export const waitExtrinsic = (
   api: ApiBase<"promise">,

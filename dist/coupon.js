@@ -10,7 +10,7 @@ class Coupon {
     public;
     secret;
     constructor(secret, amount) {
-        const pair = utils_1.keyring.addFromUri(secret);
+        const pair = utils_1.cryptoKeyring.addFromUri(secret);
         const publicKey = (0, util_1.u8aToHex)(pair.addressRaw);
         this.public = publicKey;
         this.secret = secret;

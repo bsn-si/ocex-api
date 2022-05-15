@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ocex = exports.ErrorCode = void 0;
+exports.Ocex = exports.ErrorCode = exports.CONTRACT_MULTIPLE_COUPONS_LIMIT = void 0;
 const ocex_coupon_signature_1 = require("ocex-coupon-signature");
 const base_1 = require("@polkadot/api-contract/base");
 const api_1 = require("@polkadot/api");
@@ -12,6 +12,8 @@ async function getBalance(api, address) {
     const { data: { free } } = await api.query.system.account(address);
     return free;
 }
+// How many coupons can added with `addCoupons` method in contract - by default 5
+exports.CONTRACT_MULTIPLE_COUPONS_LIMIT = 5;
 var ErrorCode;
 (function (ErrorCode) {
     ErrorCode["InvalidParseCouponSignature"] = "InvalidParseCouponSignature";
@@ -69,7 +71,7 @@ class Ocex {
         return (0, utils_1.execContractCallWithResult)(this.#contract, this.#owner, "addCoupon", coupon.public, coupon.amount);
     }
     // Set array `max N items` of `coupon` with declared per key.
-    async addCoupons(coupons, amount, limit = 5) {
+    async addCoupons(coupons, amount, limit = exports.CONTRACT_MULTIPLE_COUPONS_LIMIT) {
         if (coupons.length > limit) {
             throw new Error(`Max ${limit} coupons can be added with this method`);
         }

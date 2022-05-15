@@ -4,7 +4,7 @@ import { Contract } from "@polkadot/api-contract/base";
 import { KeyringPair } from "@polkadot/keyring/types";
 import Keyring from "@polkadot/keyring";
 import * as BN from "bn.js";
-export declare const keyring: Keyring;
+export declare const cryptoKeyring: Keyring;
 export declare const waitExtrinsic: (api: ApiBase<"promise">, extrinsic: SubmittableExtrinsic<"promise", ISubmittableResult>, signer: KeyringPair, waitStatus?: string[]) => Promise<ISubmittableResult>;
 export declare const execContractCallWithResult: (contract: Contract<"promise">, signer: KeyringPair, method: string, ...args: unknown[]) => Promise<any>;
 export declare enum BalanceGrade {

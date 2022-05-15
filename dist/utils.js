@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fmtBalance = exports.getBalance = exports.BalanceGrade = exports.execContractCallWithResult = exports.waitExtrinsic = exports.keyring = void 0;
+exports.fmtBalance = exports.getBalance = exports.BalanceGrade = exports.execContractCallWithResult = exports.waitExtrinsic = exports.cryptoKeyring = void 0;
 const keyring_1 = require("@polkadot/keyring");
 const BN = require("bn.js");
-exports.keyring = new keyring_1.default({ type: "sr25519" });
+exports.cryptoKeyring = new keyring_1.default({ type: "sr25519" });
 const waitExtrinsic = (api, extrinsic, signer, waitStatus) => new Promise(async (resolve, reject) => {
     const unsubscribe = await extrinsic.signAndSend(signer, res => {
         const defaultStatusMatch = res.status.isInBlock || res.status.isFinalized;
