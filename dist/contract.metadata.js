@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// @NOTE: this is generated metadata from https://github.com/bsn-si/ocex-smartcontract build
 exports.default = {
     source: {
-        hash: "0x3d4fc083046b369217ac15235faf2099e9bbb73782f7ec8cf9bd0dc2636f0040",
+        hash: "0xe6a71ad957b74bb2d1f1b8b355fc48afa6e289bffb047000c8db2373d744f5ca",
         language: "ink! 3.0.1",
         compiler: "rustc 1.62.0-nightly",
     },
@@ -219,6 +218,26 @@ exports.default = {
                         type: 4,
                     },
                     selector: "0x9ae76f03",
+                },
+                {
+                    args: [
+                        {
+                            label: "account",
+                            type: {
+                                displayName: ["ink_env", "AccountId"],
+                                type: 1,
+                            },
+                        },
+                    ],
+                    docs: [" Transfer contract ownership to another user"],
+                    label: "transfer_ownership",
+                    mutates: true,
+                    payable: false,
+                    returnType: {
+                        displayName: ["Result"],
+                        type: 15,
+                    },
+                    selector: "0x107e33ea",
                 },
             ],
         },

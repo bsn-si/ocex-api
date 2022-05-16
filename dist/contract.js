@@ -108,6 +108,10 @@ class Ocex {
     async paybackNotReservedFunds() {
         return (0, utils_1.execContractCallWithResult)(this.#contract, this.#owner, "paybackNotReservedFunds");
     }
+    // Method for transfer contract ownership to another user. After that request need renew instance for calls
+    async transferOwnership(newOwner) {
+        return (0, utils_1.execContractCallWithResult)(this.#contract, this.#owner, "transferOwnership", newOwner);
+    }
     // Create contract helper class instance from scratch
     static async instantiateWithCode(api, owner, wasm) {
         const contract = await (0, upload_1.uploadContract)(api, owner, wasm);

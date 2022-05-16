@@ -174,8 +174,13 @@ export class Ocex {
   }
 
   // Method for transferring spare balance (not reserved for coupons)
-  public async paybackNotReservedFunds() {
+  public async paybackNotReservedFunds(): Promise<boolean> {
     return execContractCallWithResult(this.#contract, this.#owner, "paybackNotReservedFunds")
+  }
+
+  // Method for transfer contract ownership to another user. After that request need renew instance for calls
+  public async transferOwnership(newOwner: AccountId | string): Promise<boolean> {
+    return execContractCallWithResult(this.#contract, this.#owner, "transferOwnership", newOwner)
   }
 
   // Create contract helper class instance from scratch
