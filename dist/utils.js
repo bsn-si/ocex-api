@@ -5,7 +5,8 @@ const keyring_1 = require("@polkadot/keyring");
 const BN = require("bn.js");
 exports.cryptoKeyring = new keyring_1.default({ type: "sr25519" });
 const waitExtrinsic = (api, extrinsic, signer, waitStatus) => new Promise(async (resolve, reject) => {
-    const unsubscribe = await extrinsic.signAndSend(signer, res => {
+    const args = Array.isArray(signer) ? [signer[0], { signer: signer[1] }] : [signer, {}];
+    const unsubscribe = await extrinsic.signAndSend(args[0], args[1], res => {
         const defaultStatusMatch = res.status.isInBlock || res.status.isFinalized;
         const matchedStatus = waitStatus
             ? !waitStatus.map(key => res.status[key]).includes(false)
@@ -32,8 +33,9 @@ const waitExtrinsic = (api, extrinsic, signer, waitStatus) => new Promise(async 
 });
 exports.waitExtrinsic = waitExtrinsic;
 const execContractCallWithResult = async (contract, signer, method, ...args) => {
+    const address = Array.isArray(signer) ? signer[0] : signer.address;
     // Estimate with ~expected value
-    const query = (await contract.query[method](signer.address, { gasLimit: -1 }, ...args));
+    const query = (await contract.query[method](address, { gasLimit: -1 }, ...args));
     if (query.result.isOk) {
         const data = query.output.toJSON();
         if (data.ok) {

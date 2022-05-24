@@ -1,12 +1,12 @@
 import { ApiBase, SubmittableExtrinsic } from "@polkadot/api/types";
-import { ISubmittableResult } from "@polkadot/types/types";
+import { ISubmittableResult, Signer } from "@polkadot/types/types";
 import { Contract } from "@polkadot/api-contract/base";
 import { KeyringPair } from "@polkadot/keyring/types";
 import Keyring from "@polkadot/keyring";
 import * as BN from "bn.js";
 export declare const cryptoKeyring: Keyring;
-export declare const waitExtrinsic: (api: ApiBase<"promise">, extrinsic: SubmittableExtrinsic<"promise", ISubmittableResult>, signer: KeyringPair, waitStatus?: string[]) => Promise<ISubmittableResult>;
-export declare const execContractCallWithResult: (contract: Contract<"promise">, signer: KeyringPair, method: string, ...args: unknown[]) => Promise<any>;
+export declare const waitExtrinsic: (api: ApiBase<"promise">, extrinsic: SubmittableExtrinsic<"promise", ISubmittableResult>, signer: KeyringPair | [string, Signer], waitStatus?: string[]) => Promise<ISubmittableResult>;
+export declare const execContractCallWithResult: (contract: Contract<"promise">, signer: KeyringPair | [string, Signer], method: string, ...args: unknown[]) => Promise<any>;
 export declare enum BalanceGrade {
     Pico = 1,
     Nano = 1000,

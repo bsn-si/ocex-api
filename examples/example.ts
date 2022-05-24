@@ -3,6 +3,7 @@ import { ApiPromise, WsProvider } from "@polkadot/api"
 import { Keyring } from "@polkadot/keyring"
 import { u8aToHex } from "@polkadot/util"
 
+import { get_coupon_signature } from "ocex-coupon-signature"
 import * as fs from "fs/promises"
 import * as path from "path"
 
@@ -56,6 +57,13 @@ async function main() {
   console.log("Multiple coupons inserted: ", multipleInsertResult)
 
   // activate coupon and transfer funds to Charlie
+
+  // @NOTE: NEED SET GENERATE SIGN METHOD BEFORE INTERACT
+  // For this example - we use `nodejs` build from git (from devDependencies)
+  // If you need use api from Web - use web_pkg version from git instead
+  // `yarn add 'https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg_web?main'`
+  contract.get_coupon_signature = get_coupon_signature
+
   const receiver = keyring.addFromUri("//Charlie")
   const activated = await contract.activateCoupon(coupon_1, u8aToHex(receiver.addressRaw))
   console.log("Coupon activated: ", coupon_1.public, activated)

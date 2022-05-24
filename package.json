@@ -14,16 +14,16 @@
   "author": "Anton Shramko <antonshramko@yandex.ru>",
   "license": "Apache-2.0",
   "dependencies": {
-    "ocex-coupon-signature": "https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg?main",
+    "@polkadot/api": "^8.4.2",
     "@polkadot/api-contract": "^8.4.2",
-    "@polkadot/util-crypto": "^9.2.1",
     "@polkadot/keyring": "^9.2.1",
     "@polkadot/types": "^8.4.2",
     "@polkadot/util": "^9.2.1",
-    "@polkadot/api": "^8.4.2",
+    "@polkadot/util-crypto": "^9.2.1",
     "bn.js": "^5.2.0"
   },
   "devDependencies": {
+    "ocex-coupon-signature": "https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg_node?main",
     "@types/bn.js": "^5.1.0",
     "@types/node": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^5.23.0",

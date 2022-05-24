@@ -2,6 +2,7 @@
 import { AccountId } from "@polkadot/types/interfaces";
 import { Contract } from "@polkadot/api-contract/base";
 import { KeyringPair } from "@polkadot/keyring/types";
+import { Signer } from "@polkadot/types/types";
 import { ApiBase } from "@polkadot/api/base";
 import * as BN from "bn.js";
 import { Coupon } from "./coupon";
@@ -21,10 +22,13 @@ export interface CouponsResult {
     accepted: string[];
     declined: string[];
 }
+declare type getCouponSignature = (contract_address: string, receiver: string, coupon: string) => void;
 export declare class Ocex {
     #private;
-    constructor(contract: Contract<"promise">, owner: KeyringPair);
+    get_coupon_signature?: getCouponSignature;
+    constructor(contract: Contract<"promise">, owner: KeyringPair | [string, Signer]);
     get address(): AccountId;
+    get ownerAddress(): string;
     get abi(): import("@polkadot/api-contract").Abi;
     contractBalance(): Promise<BN>;
     availableBalance(): Promise<BN>;
@@ -39,3 +43,4 @@ export declare class Ocex {
     static instantiateWithCode(api: ApiBase<"promise">, owner: KeyringPair, wasm: string | Uint8Array | Buffer): Promise<Ocex>;
     static fromAddress(api: ApiBase<"promise">, owner: KeyringPair, address: string | AccountId): Promise<Ocex>;
 }
+export {};

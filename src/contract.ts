@@ -1,4 +1,3 @@
-import { get_coupon_signature } from "ocex-coupon-signature"
 import { AccountId } from "@polkadot/types/interfaces"
 import { Contract } from "@polkadot/api-contract/base"
 import { KeyringPair } from "@polkadot/keyring/types"
@@ -37,12 +36,17 @@ export interface CouponsResult {
   declined: string[]
 }
 
+type getCouponSignature = (contract_address: string, receiver: string, coupon: string) => void
+
 export class Ocex {
   // Base contract api class
   #contract: Contract<"promise">
   // owner is owner of contract
-  // [string, Signer] tuple need for use with web extensions 
+  // [string, Signer] tuple need for use with web extensions
   #owner: KeyringPair | [string, Signer]
+
+  // if you need signature maker - import needed build version if needed
+  get_coupon_signature?: getCouponSignature
 
   constructor(contract: Contract<"promise">, owner: KeyringPair | [string, Signer]) {
     this.#contract = contract
@@ -145,7 +149,17 @@ export class Ocex {
 
   // Activate `coupon` with transfer of appropriate liquidity to a receiver's address.
   public async activateCoupon(coupon: Coupon, receiver: string) {
-    const signature = get_coupon_signature(this.#contract.address.toHex(), receiver, coupon.secret)
+    if (!this.get_coupon_signature) {
+      throw new Error(
+        "You doesn't assign coupon_signature handler function, choose packagge and link before interact",
+      )
+    }
+
+    const signature = this.get_coupon_signature(
+      this.#contract.address.toHex(),
+      receiver,
+      coupon.secret,
+    )
 
     return execContractCallWithResult(
       this.#contract,
