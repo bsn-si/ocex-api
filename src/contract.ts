@@ -3,6 +3,7 @@ import { AccountId } from "@polkadot/types/interfaces"
 import { Contract } from "@polkadot/api-contract/base"
 import { KeyringPair } from "@polkadot/keyring/types"
 import { toPromiseMethod } from "@polkadot/api"
+import { Signer } from "@polkadot/types/types"
 import { ApiBase } from "@polkadot/api/base"
 import * as BN from "bn.js"
 
@@ -40,15 +41,20 @@ export class Ocex {
   // Base contract api class
   #contract: Contract<"promise">
   // owner is owner of contract
-  #owner: KeyringPair
+  // [string, Signer] tuple need for use with web extensions 
+  #owner: KeyringPair | [string, Signer]
 
-  constructor(contract: Contract<"promise">, owner: KeyringPair) {
+  constructor(contract: Contract<"promise">, owner: KeyringPair | [string, Signer]) {
     this.#contract = contract
     this.#owner = owner
   }
 
   get address() {
     return this.#contract.address
+  }
+
+  get ownerAddress() {
+    return Array.isArray(this.#owner) ? this.#owner[0] : this.#owner.address
   }
 
   get abi() {
@@ -62,7 +68,7 @@ export class Ocex {
 
   // Contract spare funds
   public async availableBalance(): Promise<BN> {
-    const query = await this.#contract.query.availableBalance(this.#owner.address, {
+    const query = await this.#contract.query.availableBalance(this.ownerAddress, {
       gasLimit: -1,
     })
 
@@ -75,11 +81,10 @@ export class Ocex {
     const api = this.#contract.api
 
     const transfer = api.tx.balances.transfer(this.#contract.address, amount)
-    const ownerBalance = await getBalance(api, this.#owner.address)
-    const info = await transfer.paymentInfo(this.#owner)
-    const fundsNotEnough = ownerBalance.lt(amount.add(info.partialFee))
+    const ownerBalance = await getBalance(api, this.ownerAddress)
+    const info = await transfer.paymentInfo(this.ownerAddress)
 
-    if (fundsNotEnough) {
+    if (ownerBalance.lt(amount.add(info.partialFee))) {
       throw new Error("owner balance not enough for transaction")
     }
 
@@ -129,7 +134,7 @@ export class Ocex {
     const publicKey = typeof coupon === "string" ? coupon : coupon.public
 
     const query = await this.#contract.query.checkCoupon(
-      this.#owner.address,
+      this.ownerAddress,
       { gasLimit: -1 },
       publicKey,
     )

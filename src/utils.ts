@@ -1,5 +1,5 @@
 import { ApiBase, SubmittableExtrinsic } from "@polkadot/api/types"
-import { ISubmittableResult } from "@polkadot/types/types"
+import { ISubmittableResult, Signer } from "@polkadot/types/types"
 import { Contract } from "@polkadot/api-contract/base"
 import { KeyringPair } from "@polkadot/keyring/types"
 import Keyring from "@polkadot/keyring"
@@ -10,11 +10,13 @@ export const cryptoKeyring = new Keyring({ type: "sr25519" })
 export const waitExtrinsic = (
   api: ApiBase<"promise">,
   extrinsic: SubmittableExtrinsic<"promise", ISubmittableResult>,
-  signer: KeyringPair,
+  signer: KeyringPair | [string, Signer],
   waitStatus?: string[],
 ): Promise<ISubmittableResult> =>
   new Promise(async (resolve, reject) => {
-    const unsubscribe = await extrinsic.signAndSend(signer, res => {
+    const args: any = Array.isArray(signer) ? [signer[0], { signer: signer[1] }] : [signer, {}]
+
+    const unsubscribe = await extrinsic.signAndSend(args[0], args[1], res => {
       const defaultStatusMatch = res.status.isInBlock || res.status.isFinalized
       const matchedStatus = waitStatus
         ? !waitStatus.map(key => res.status[key]).includes(false)
@@ -44,12 +46,14 @@ export const waitExtrinsic = (
 
 export const execContractCallWithResult = async (
   contract: Contract<"promise">,
-  signer: KeyringPair,
+  signer: KeyringPair | [string, Signer],
   method: string,
   ...args: unknown[]
 ) => {
+  const address = Array.isArray(signer) ? signer[0] : signer.address
+  
   // Estimate with ~expected value
-  const query = (await contract.query[method](signer.address, { gasLimit: -1 }, ...args)) as any
+  const query = (await contract.query[method](address, { gasLimit: -1 }, ...args)) as any
 
   if (query.result.isOk) {
     const data = query.output.toJSON()
