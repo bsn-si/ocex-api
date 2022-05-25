@@ -215,7 +215,7 @@ export class Ocex {
   // Create contract helper class instance from known address
   static async fromAddress(
     api: ApiBase<"promise">,
-    owner: KeyringPair,
+    owner: KeyringPair | [string, Signer],
     address: string | AccountId,
   ) {
     const contract = new Contract(api, CONTRACT_ABI, address, toPromiseMethod)

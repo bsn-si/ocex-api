@@ -41,6 +41,6 @@ export declare class Ocex {
     paybackNotReservedFunds(): Promise<boolean>;
     transferOwnership(newOwner: AccountId | string): Promise<boolean>;
     static instantiateWithCode(api: ApiBase<"promise">, owner: KeyringPair, wasm: string | Uint8Array | Buffer): Promise<Ocex>;
-    static fromAddress(api: ApiBase<"promise">, owner: KeyringPair, address: string | AccountId): Promise<Ocex>;
+    static fromAddress(api: ApiBase<"promise">, owner: KeyringPair | [string, Signer], address: string | AccountId): Promise<Ocex>;
 }
 export {};
