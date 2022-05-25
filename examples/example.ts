@@ -3,7 +3,7 @@ import { ApiPromise, WsProvider } from "@polkadot/api"
 import { Keyring } from "@polkadot/keyring"
 import { u8aToHex } from "@polkadot/util"
 
-import { get_coupon_signature } from "ocex-coupon-signature"
+import { get_coupon_signature } from "ocex-coupon-signature-node"
 import * as fs from "fs/promises"
 import * as path from "path"
 
