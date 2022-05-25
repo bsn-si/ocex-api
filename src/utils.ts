@@ -65,7 +65,9 @@ export const execContractCallWithResult = async (
       await waitExtrinsic(contract.api, extrinsic, signer)
       return data.ok
     } else {
-      throw new Error(`Error with add coupon '${data.err}'`)
+      const error = new Error(`Error '${data.err}'`) as any
+      error.data = data.err
+      throw error
     }
   } else {
     throw query.result.asErr().toJSON()
