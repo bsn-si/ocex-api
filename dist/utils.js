@@ -45,7 +45,9 @@ const execContractCallWithResult = async (contract, signer, method, ...args) => 
             return data.ok;
         }
         else {
-            throw new Error(`Error with add coupon '${data.err}'`);
+            const error = new Error(`Error '${data.err}'`);
+            error.data = data.err;
+            throw error;
         }
     }
     else {
