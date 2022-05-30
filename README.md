@@ -1,3 +1,4 @@
+## Disclaimer
 > 💀 This is a **Work in Progress**.  
 > Current status: Common PoC data storage and methods available. Partially tested.   
 > **Use at your own risk**.
@@ -6,23 +7,23 @@
     🎟️ ✨ OCEX API Client 🎁 👛
 </h1>
 
-OCEX smartcontract api for interact with smartcontract.
+OCEX smartcontract api for interaction with an OCEX smartcontract.
 
 ## Features
 - For Owners
-    - Can publish new instance of contract to blockchain
-    - Can fill balance of instantiated contract
-    - Add new coupons
-    - Burn coupons
-    - Check spare funds on smartcontract
-    - Payback spare funds
-    - Transfer ownership
+    - publish new instance of a contract to a blockchain
+    - top-up balance of an instantiated contract
+    - add new coupons
+    - burn coupons
+    - check spare funds on a smartcontract
+    - withdraw spare funds
+    - transfer ownership of a contract
 - For Clients
-    - Activate coupon
-    - Check coupon
+    - activate a coupon
+    - сheck a coupon
 
-## Install && Usage
-Now module doesn't have package on npm, and have dependency of wasm module. Use package locally. Before usage you need setup modules. And also have installed actual version `rust-lang` compiler. 
+## Installation && Usage
+This module doesn't have a package on NPM and is dependant from a wasm module. Use package locally. Before usage you need to setup modules and have an actual version of a `rust-lang` compiler installed. 
 
 _Setup wasm crypto helper_
 
@@ -49,4 +50,4 @@ npm run run:example
 ```
 
 ## License
-[Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/) © Bela Supernova ([bsn.si](https://bsn.si))
+[Apache License 2.0](https://github.com/bsn-si/ocex-api/blob/main/LICENSE) © Bela Supernova ([bsn.si](https://bsn.si))
