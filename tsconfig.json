@@ -9,7 +9,7 @@
     "target": "esnext",
     "lib": ["ES2020"],
     "rootDir": "./src",
-    "outDir": "dist",
+    "outDir": "build",
 
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": false,

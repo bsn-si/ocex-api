@@ -2,8 +2,8 @@
   "name": "ocex-api",
   "version": "0.1.1",
   "description": "Ocex smartcontract api client",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
     "run:example": "npm run build && ts-node ./examples/example.ts",
     "style:fix": "prettier --config .prettierrc.js 'src/**/*.{ts,tsx}' --write",
