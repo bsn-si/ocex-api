@@ -22,31 +22,76 @@ OCEX smartcontract api for interaction with an OCEX smartcontract.
     - activate a coupon
     - сheck a coupon
 
-## Installation && Usage
-This module doesn't have a package on NPM and is dependant from a wasm module. Use package locally. Before usage you need to setup modules and have an actual version of a `rust-lang` compiler installed. 
-
-_Setup wasm crypto helper_
+## Install && Usage
 
 ```
-cd coupon-signature/
-cargo install wasm-pack
-wasm-pack build --target nodejs --release
+yarn add https://github.com/bsn-si/ocex-api
+# or 
+npm i --save https://github.com/bsn-si/ocex-api
 ```
 
-_Setup Package_
+Simple node usage
 
-Back to package root dir and install all dependencies with
+``` js
+import { cryptoWaitReady } from "@polkadot/util-crypto"
+import { ApiPromise, WsProvider } from "@polkadot/api"
+import { Keyring } from "@polkadot/keyring"
 
+// Import contract api class
+import { Ocex } from "ocex-api"
+
+async function main() {
+  await cryptoWaitReady()
+  
+  const keyring = new Keyring({ type: "sr25519" })
+
+  // Initialise the provider to connect to the local node
+  const provider = new WsProvider("ws://127.0.0.1:9944")
+  const client = await ApiPromise.create({ provider })
+
+  // Common owner keys
+  const signer = keyring.addFromUri("//Alice")
+  console.log("Signer: ", signer.address)
+
+  // Instance from exists contract address 
+  const contract = await Ocex.fromAddress(client, signer, "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty")
+  
+  // Other actions..
+}
 ```
-npm install
-# OR
-yarn
-```
 
-Check out our [example](/examples/example.ts) of usage. For run example:
+For more detauls check out our [example](/examples/example.ts) of usage. For run example:
 
 ```
 npm run run:example
+```
+
+### Coupon activation method
+Now module doesn't have package on npm, and have dependency of wasm module. You need install package by your target & assign method to class instance.
+
+#### NodeJS
+``` bash
+# Package for use from nodejs
+yarn add https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg_node?main
+
+# Package for use from web (with webpack)
+yarn add https://gitpkg.now.sh/bsn-si/ocex-coupon-signature/pkg_web?main
+```
+
+And for initialization
+
+``` js
+// Import for nodejs
+import { get_coupon_signature } from "ocex-coupon-signature-node"
+// Import for web with webpack
+import { get_coupon_signature } from "ocex-coupon-signature-web"
+
+// ...
+
+const contract = await Ocex.fromAddress(client, signer, "...")
+
+// Setup method for create signature
+contract.get_coupon_signature = get_coupon_signature
 ```
 
 ## License
