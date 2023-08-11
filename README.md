@@ -94,5 +94,11 @@ const contract = await Ocex.fromAddress(client, signer, "...")
 contract.get_coupon_signature = get_coupon_signature
 ```
 
+## Related repos
+- OCEX [coupon activation dapp](https://github.com/bsn-si/ocex-activation)
+- OCEX [Ink! smart contract](https://github.com/bsn-si/ocex-smartcontract)
+- OCEX [CLI management tool](https://github.com/bsn-si/ocex-cli)
+- JS/Wasm [library](https://github.com/bsn-si/ocex-coupon-signature) for coupon activation signatures
+
 ## License
 [Apache License 2.0](https://github.com/bsn-si/ocex-api/blob/main/LICENSE) © Bela Supernova ([bsn.si](https://bsn.si))
